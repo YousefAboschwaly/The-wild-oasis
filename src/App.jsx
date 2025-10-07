@@ -1,6 +1,18 @@
+import styled from "styled-components"
+import GlobalStyles from "./styles/GlobalStyles"
 
 export default function App() {
+
+const H1= styled.h1`
+  font-size: 40px;
+  color: blue;
+  font-weight: bold;
+`
+
   return (
-    <div>Hello React </div>
+    <>
+    <GlobalStyles/>
+     <H1> Hello React  </H1>
+      </>
   )
 }

@@ -51,7 +51,7 @@ const variations = {
 const Button = styled.button`
 font-size: 1.4 rem ;
 font-weight: 500;
-padding: 1.2 rem 1.6 rem ;
+padding: 1.2rem 1.6rem ;
 border-radius: var(--border-radius-sm);
 box-shadow: var(--shadow-sm);
 border: none;

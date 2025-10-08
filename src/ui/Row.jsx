@@ -2,6 +2,8 @@ import styled, { css } from "styled-components";
 
 const Row = styled.div`
   display: flex;
+
+
   ${(props) =>
     props.type === "horizontal" &&
     css`
@@ -9,11 +11,14 @@ const Row = styled.div`
       align-items: center;
     `}
   ${(props) =>
-    props.type === "vertical" &&
+    props.type === "vertical"  || props.type == null&&
     css`
       flex-direction: column;
       gap: 1.6rem;
     `}
+ 
+
+
 `;
 // Row.defaultProps = {
 //   type: "vertical",

@@ -22,7 +22,7 @@ export default function App() {
     <>
       <GlobalStyles />
       <StyledApp>
-        <Row type="vertical">
+        <Row >
           <Row type="horizontal">
             <Heading as="h1">The World Oasis</Heading>
 

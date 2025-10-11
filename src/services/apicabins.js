@@ -7,7 +7,7 @@ let { data, error } = await supabase
   .select('*')
   if(error) {
     console.error(error)
-    throw new Error("couldn't get   cabins")
+    throw new Error("Cabins could not be loaded" )
   }
  return data
 }
@@ -21,7 +21,7 @@ const { error , data } = await supabase
   .eq('id', id)
   if(error) {
     console.error(error)
-    throw new Error('Error fetching cabins')
+    throw new Error('Cabin could not be deleted')
   }
    return data
 

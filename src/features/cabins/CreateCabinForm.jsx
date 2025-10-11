@@ -45,8 +45,11 @@ const Error = styled.span`
 
 function CreateCabinForm() {
   const {register , handleSubmit}= useForm()
+  function onSubmit(data){
+    console.log(data)
+  }
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow>
         <Label htmlFor="name">Cabin name</Label>
         <Input type="text" id="name"  {...register("name")}/>
@@ -54,27 +57,27 @@ function CreateCabinForm() {
 
       <FormRow>
         <Label htmlFor="maxCapacity">Maximum capacity</Label>
-        <Input type="number" id="maxCapacity" {...register("")}  />
+        <Input type="number" id="maxCapacity" {...register("maxCapacity")}  />
       </FormRow>
 
       <FormRow>
         <Label htmlFor="regularPrice">Regular price</Label>
-        <Input type="number" id="regularPrice" {...register("")} />
+        <Input type="number" id="regularPrice" {...register("regularPrice")} />
       </FormRow>
 
       <FormRow>
         <Label htmlFor="discount">Discount</Label>
-        <Input type="number" id="discount" defaultValue={0} {...register("")} />
+        <Input type="number" id="discount" defaultValue={0} {...register("discount")} />
       </FormRow>
 
       <FormRow>
         <Label htmlFor="description">Description for website</Label>
-        <Textarea type="number" id="description" defaultValue=""  {...register("")}/>
+        <Textarea type="number" id="description" defaultValue=""  {...register("description")}/>
       </FormRow>
 
       <FormRow>
         <Label htmlFor="image">Cabin photo</Label>
-        <FileInput id="image" accept="image/*" {...register("")} />
+        <FileInput id="image" accept="image/*"/>
       </FormRow>
 
       <FormRow>
@@ -82,7 +85,7 @@ function CreateCabinForm() {
         <Button variation="secondary" type="reset">
           Cancel
         </Button>
-        <Button>Edit cabin</Button>
+        <Button>Add cabin</Button>
       </FormRow>
     </Form>
   );

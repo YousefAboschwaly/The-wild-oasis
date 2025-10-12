@@ -6,6 +6,8 @@ import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { createCabin } from "../../services/apicabins";
 
 const FormRow = styled.div`
   display: grid;
@@ -45,6 +47,10 @@ const Error = styled.span`
 
 function CreateCabinForm() {
   const {register , handleSubmit}= useForm()
+
+
+
+
   function onSubmit(data){
     console.log(data)
   }

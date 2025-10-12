@@ -8,6 +8,7 @@ import Textarea from "../../ui/Textarea";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { createCabin } from "../../services/apicabins";
+import toast from "react-hot-toast";
 
 const FormRow = styled.div`
   display: grid;
@@ -48,11 +49,18 @@ const Error = styled.span`
 function CreateCabinForm() {
   const {register , handleSubmit}= useForm()
 
+  const {mutate, isPending } = useMutation({
+    mutationFn: createCabin,
+    onSuccess:()=>{
+      toast.success("New cabin successfully created ")
+    },
+    onError:(err)=>toast.error(err.message)
+  })
 
 
 
   function onSubmit(data){
-    console.log(data)
+    mutate(data)
   }
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -91,7 +99,7 @@ function CreateCabinForm() {
         <Button variation="secondary" type="reset">
           Cancel
         </Button>
-        <Button>Add cabin</Button>
+        <Button disabled={isPending}>Add cabin</Button>
       </FormRow>
     </Form>
   );

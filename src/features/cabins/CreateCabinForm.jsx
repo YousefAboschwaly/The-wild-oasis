@@ -1,5 +1,3 @@
-import styled from "styled-components";
-
 import Input from "../../ui/Input";
 import Form from "../../ui/Form";
 import Button from "../../ui/Button";
@@ -9,11 +7,12 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createCabin } from "../../services/apicabins";
 import toast from "react-hot-toast";
-
-
+import FormRow from "../../ui/FormRow";
 
 function CreateCabinForm() {
-  const { register, handleSubmit, reset, getValues } = useForm();
+  const { register, handleSubmit, reset, getValues, formState } = useForm();
+
+  const { errors } = formState;
   const queryClient = useQueryClient();
   const { mutate, isPending: isCreating } = useMutation({
     mutationFn: createCabin,
@@ -33,8 +32,7 @@ function CreateCabinForm() {
   }
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
-      <FormRow>
-        <Label htmlFor="name">Cabin name</Label>
+      <FormRow label={"Cabin name"} error={errors.name?.message}>
         <Input
           type="text"
           id="name"
@@ -44,8 +42,7 @@ function CreateCabinForm() {
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="maxCapacity">Maximum capacity</Label>
+      <FormRow label={"Maximum capacity"} error={errors.maxCapacity?.message}>
         <Input
           type="number"
           id="maxCapacity"
@@ -56,8 +53,7 @@ function CreateCabinForm() {
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="regularPrice">Regular price</Label>
+      <FormRow label={"Regular price"} error={errors.regularPrice?.message}>
         <Input
           type="number"
           id="regularPrice"
@@ -68,23 +64,25 @@ function CreateCabinForm() {
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="discount">Discount</Label>
-        <Input
-          type="number"
-          id="discount"
-          defaultValue={0}
-          {...register("discount", {
-            required: "This field is required",
-            validate: (value) =>
-              value < getValues("regularPrice")  ||
-              "Discount must be less than regular price",
-          })}
-        />
-      </FormRow>
+<FormRow label="Discount" error={errors.discount?.message}>
+  <Input
+    type="number"
+    id="discount"
+    defaultValue={0}
+    {...register("discount", {
+      required: "This field is required",
+      validate: (value) => {
+        const regularPrice = getValues("regularPrice");
+        return (
+          +value <= +regularPrice || "Discount must be less than regular price"
+        );
+      },
+    })}
+  />
+</FormRow>
 
-      <FormRow>
-        <Label htmlFor="description">Description for website</Label>
+
+      <FormRow label={"Description"} error={errors.description?.message}>
         <Textarea
           type="number"
           id="description"
@@ -95,8 +93,7 @@ function CreateCabinForm() {
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="image">Cabin photo</Label>
+      <FormRow label={"Cabin photo"} error={errors.image?.message}>
         <FileInput id="image" accept="image/*" />
       </FormRow>
 

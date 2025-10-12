@@ -64,31 +64,44 @@ function CreateCabinForm() {
   function onSubmit(data){
     mutate(data)
   }
+  function onError(errors){
+    console.log(errors)
+  }
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit, onError)}>
       <FormRow>
         <Label htmlFor="name">Cabin name</Label>
-        <Input type="text" id="name"  {...register("name")}/>
+        <Input type="text" id="name"  {...register("name",{
+          required:"This field is required",
+        })}/>
       </FormRow>
 
       <FormRow>
         <Label htmlFor="maxCapacity">Maximum capacity</Label>
-        <Input type="number" id="maxCapacity" {...register("maxCapacity")}  />
+        <Input type="number" id="maxCapacity" {...register("maxCapacity",{
+          required:"This field is required",
+        })}  />
       </FormRow>
 
       <FormRow>
         <Label htmlFor="regularPrice">Regular price</Label>
-        <Input type="number" id="regularPrice" {...register("regularPrice")} />
+        <Input type="number" id="regularPrice" {...register("regularPrice",{
+          required:"This field is required",
+        })} />
       </FormRow>
 
       <FormRow>
         <Label htmlFor="discount">Discount</Label>
-        <Input type="number" id="discount" defaultValue={0} {...register("discount")} />
+        <Input type="number" id="discount" defaultValue={0} {...register("discount",{
+          required:"This field is required",
+        })} />
       </FormRow>
 
       <FormRow>
         <Label htmlFor="description">Description for website</Label>
-        <Textarea type="number" id="description" defaultValue=""  {...register("description")}/>
+        <Textarea type="number" id="description" defaultValue=""  {...register("description",{
+          required:"This field is required",
+        })}/>
       </FormRow>
 
       <FormRow>

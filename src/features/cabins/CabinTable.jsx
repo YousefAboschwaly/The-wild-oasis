@@ -1,6 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useCabins } from "./useCabins";
+import toast from "react-hot-toast";
+
 import styled from "styled-components";
-import { getCabins } from "../../services/apicabins";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
 
@@ -28,14 +29,10 @@ const TableHeader = styled.header`
   padding: 1.6rem 2.4rem;
 `;
 
-
 export default function CabinTable() {
-  const {data:cabins , isPending  , error} = useQuery({
-    queryKey:["cabins"],
-    queryFn: getCabins
-  })
-  console.log(cabins , isPending , error )
-  if(isPending) return <Spinner/>
+  const { cabins, isPending, error } = useCabins();
+  if (error) toast.error(error.message);
+  if (isPending) return <Spinner />;
   return (
     <Table role="table">
       <TableHeader role="row">
@@ -45,10 +42,10 @@ export default function CabinTable() {
         <div>Price</div>
         <div>Discount</div>
         <div></div>
-
       </TableHeader>
-      {cabins?.map(cabin=> <CabinRow cabin={cabin} key={cabin.id}/>)}
-
+      {cabins?.map((cabin) => (
+        <CabinRow cabin={cabin} key={cabin.id} />
+      ))}
     </Table>
-  )
+  );
 }

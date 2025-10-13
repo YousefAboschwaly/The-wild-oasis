@@ -20,6 +20,7 @@ const Form = styled.form`
     
   overflow: hidden;
   font-size: 1.4rem;
+  transition: all 0.4s;
 `;
 
 export default Form;

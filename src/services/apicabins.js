@@ -13,7 +13,7 @@ async function createCabin(newCabin) {
   // https://ersqmuthcoyjqdgtqytk.supabase.co/storage/v1/object/public/cabin-images/cabin-001.jpg
   const imageName = `${crypto.randomUUID()}-${newCabin.image.name}`.replaceAll(
     "/",
-    " "
+    "-"
   );
   const imagePath = `${
     import.meta.env.VITE_SUPABASE_URL

@@ -1,4 +1,3 @@
-
 import { useForm } from "react-hook-form";
 import { useCreateCabin } from "./useCreateCabin";
 import { useEditCabin } from "./useEditCabin";
@@ -19,16 +18,23 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
   const { errors } = formState;
 
-  const {createCabin , isCreating} = useCreateCabin()
-  const {editCabin , isEditing} = useEditCabin()
-
+  const { createCabin, isCreating } = useCreateCabin();
+  const { editCabin, isEditing } = useEditCabin();
 
   const isWorking = isCreating || isEditing;
   function onSubmit(data) {
     console.log(data);
     const image = typeof data.image === "string" ? data.image : data.image[0];
-    if (isEditMode) editCabin({ newCabinData: { ...data, image }, editId });
-    else createCabin({ ...data, image });
+    if (isEditMode)
+      editCabin(
+        { newCabinData: { ...data, image }, editId },
+        {
+          // you can access data onsuccess from here
+          // onSuccess: (data)=>{console.log(data);}
+          onSuccess: () => reset(),
+        }
+      );
+    else createCabin({ ...data, image }, { onSuccess: () => reset() });
   }
   function onError(errors) {
     console.log(errors);

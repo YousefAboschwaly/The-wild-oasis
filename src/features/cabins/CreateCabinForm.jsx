@@ -109,7 +109,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           id="image"
           accept="image/*"
           {...register("image", {
-            required: "This field is required",
+            required: isEditMode ? false :"This field is required",
           })}
         />
       </FormRow>
@@ -119,7 +119,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         <Button variation="secondary" type="reset">
           Cancel
         </Button>
-        <Button disabled={isCreating}>Add cabin</Button>
+        <Button disabled={isCreating}>{isEditMode? "Edit cabin": "Create new cabin"}</Button>
       </FormRow>
     </Form>
   );

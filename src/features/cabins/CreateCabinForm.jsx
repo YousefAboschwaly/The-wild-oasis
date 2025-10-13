@@ -8,7 +8,7 @@ import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
 import { useForm } from "react-hook-form";
-import { createCabin } from "../../services/apicabins";
+import { createEditCabin } from "../../services/apicabins";
 
 function CreateCabinForm({ cabinToEdit = {} }) {
   const { id: editId, ...editValues } = cabinToEdit;
@@ -20,7 +20,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   const { errors } = formState;
   const queryClient = useQueryClient();
   const { mutate, isPending: isCreating } = useMutation({
-    mutationFn: createCabin,
+    mutationFn: createEditCabin,
     onSuccess: () => {
       toast.success("New cabin successfully created ");
       queryClient.invalidateQueries({ queryKey: ["cabins"] });

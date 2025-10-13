@@ -28,6 +28,11 @@ const { data, error } = await supabase
     throw new Error("Cabins could not be Created" )
   }
 
+// 2- Upload Image 
+const {  error:storageError } = await supabase
+  .storage
+  .from('cabin-images')
+  .upload(imageName, newCabin.image)
 
  return data
 }

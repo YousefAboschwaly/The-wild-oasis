@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCabin as deleteCabinApi } from "../../services/apicabins";
 import toast from "react-hot-toast";
 
-export default function useDeleteCabin() {
+export  function useDeleteCabin() {
 
   const queryClient = useQueryClient();
   const { mutate:deleteCabin, isPending } = useMutation({

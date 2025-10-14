@@ -27,15 +27,45 @@ async function createEditCabin(newCabin, id = null) {
     if (!fetchError) oldImage = oldData?.image;
   }
 
-  const imageName = `${crypto.randomUUID()}-${newCabin.image.name}`.replaceAll(
-    "/",
-    ""
-  );
+  // Generate new image name
+  const imageName =
+    newCabin?.image?.name
+      ? `${crypto.randomUUID()}-${newCabin.image.name}`.replaceAll("/", "")
+      : null;
 
   const hasImagePath = newCabin?.image?.startsWith?.(SUPBASEURL);
-  const imagePath = hasImagePath
+  let imagePath = hasImagePath
     ? newCabin.image
     : `${SUPBASEURL}/storage/v1/object/public/cabin-images/${imageName}`;
+
+  // If we are duplicating a cabin with an existing image, we need to copy the image in storage
+  if (!id && hasImagePath) {
+    try {
+      const oldImageUrl = newCabin.image;
+      const oldImageName = oldImageUrl.split("/").pop();
+
+      // Download the old image
+      const { data: oldFile } = await supabase.storage
+        .from("cabin-images")
+        .download(oldImageName);
+
+      if (oldFile) {
+        const newCopyName = `${crypto.randomUUID()}-${oldImageName}`;
+        const { error: uploadError } = await supabase.storage
+          .from("cabin-images")
+          .upload(newCopyName, oldFile);
+
+        if (!uploadError) {
+          imagePath = `${SUPBASEURL}/storage/v1/object/public/cabin-images/${newCopyName}`;
+        } else {
+          console.error("Failed to upload copied image:", uploadError);
+          toast.error("Cabin created but image could not be duplicated");
+        }
+      }
+    } catch (err) {
+      console.error("Error duplicating image:", err);
+    }
+  }
 
   // 1- Create or Edit cabin in the database
   let query = supabase.from("cabins");
@@ -43,27 +73,27 @@ async function createEditCabin(newCabin, id = null) {
   if (id) query = query.update({ ...newCabin, image: imagePath }).eq("id", id);
 
   const { data, error } = await query.select().single();
-
   if (error) {
     console.error(error);
     throw new Error("Cabin could not be created or updated");
   }
 
-  // if there is already an image path (means we are not updating the image) just return the data
-  if (hasImagePath) return data;
+  // 2- Upload Image 
+  if (!hasImagePath && newCabin.image) {
+    const { error: storageError } = await supabase.storage
+      .from("cabin-images")
+      .upload(imageName, newCabin.image);
 
-  // 2- Upload Image that mean we are creating a new cabin or updating the image
-  const { error: storageError } = await supabase.storage
-    .from("cabin-images")
-    .upload(imageName, newCabin.image);
-
-  if (storageError) {
-    await supabase.from("cabins").delete().eq("id", data.id);
-    throw new Error("Cabin image could not be uploaded");
+    if (storageError) {
+      await supabase.from("cabins").delete().eq("id", data.id);
+      throw new Error("Cabin image could not be uploaded");
+    }
   }
 
-  // 3- If we are updating and there is an old image, delete the old image or there was an error uploading the new image
-  if ((id && oldImage && !oldImage.startsWith(imagePath)) || storageError) {
+  // 3- If we are updating and there is an old image, delete it
+  if (
+    (id && oldImage && !oldImage.startsWith(imagePath))
+  ) {
     const oldImageName = oldImage.split("/").pop();
     if (oldImageName) {
       const { error: deleteError } = await supabase.storage
@@ -76,7 +106,6 @@ async function createEditCabin(newCabin, id = null) {
 
   return data;
 }
-
 // Delete cabin
 async function deleteCabin(id) {
   // get the cabinData if this id

@@ -3,6 +3,7 @@ import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
 
 function UpdateSettingsForm() {
+  
   return (
     <Form>
       <FormRow label='Minimum nights/booking'>

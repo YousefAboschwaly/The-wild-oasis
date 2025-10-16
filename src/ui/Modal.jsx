@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { cloneElement, createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
 import styled from "styled-components";
@@ -57,11 +57,15 @@ function Modal({children}){
   const [openName, setOpenName] = useState("")
   const close = ()=> setOpenName("")
   const open = setOpenName
-  return children
+  return <ModalContext.Provider value={{openName, close, open}}>
+    {children}
+  </ModalContext.Provider>
 }
-function Open({children , opens}){
+
+
+function Open({children , opens:openWindowName}){
   const {open} = useContext(ModalContext)
-  return children
+  return cloneElement(children,{onClick:()=>open(openWindowName)})
 }
 
  function Window({ children, onClose }) {
@@ -80,3 +84,5 @@ function Open({children , opens}){
 
 Modal.Open = Open
 Modal.Window = Window
+
+export {Modal}

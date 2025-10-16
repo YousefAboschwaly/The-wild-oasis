@@ -78,24 +78,24 @@ function Open({ children, opens: openWindowName }) {
 
 function Window({ children, name }) {
   const { openName, close } = useContext(ModalContext);
-  const ref = useRef();
-  useEffect(
-    function () {
-      function handleClick(e) {
-        if (ref.current && !ref.current.contains(e.target)) {
-          console.log("Click out");
-          close();
-        }
-      }
-      document.addEventListener("click", handleClick,true);
-      return () => document.removeEventListener("click", handleClick,true);
-    },
-    [close]
-  );
+  // const ref = useRef();
+  // useEffect(
+  //   function () {
+  //     function handleClick(e) {
+  //       if (ref.current && !ref.current.contains(e.target)) {
+  //         console.log("Click out");
+  //         close();
+  //       }
+  //     }
+  //     document.addEventListener("click", handleClick,true);
+  //     return () => document.removeEventListener("click", handleClick,true);
+  //   },
+  //   [close]
+  // );
   if (name !== openName) return;
   return createPortal(
-    <Overlay>
-      <StyledModal ref={ref}>
+    <Overlay onClick={close}>
+      <StyledModal onClick={e=>e.stopPropagation()}>
         <Button onClick={close}>
           <HiXMark />
         </Button>

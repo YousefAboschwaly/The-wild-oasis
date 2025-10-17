@@ -66,20 +66,26 @@ const StyledButton = styled.button`
 const MenusContext = createContext();
 export default function Menus({ children }) {
   const [openId, setOpenId] = useState("");
+  const [position, setPosition] = useState("");
   const close = () => setOpenId("");
   const open = setOpenId;
   return (
-    <MenusContext.Provider value={{ openId, close, open }}>
+    <MenusContext.Provider
+      value={{ openId, close, open, position, setPosition }}
+    >
       {children}
     </MenusContext.Provider>
   );
 }
 
 function Toggle({ id }) {
-  const { openId, close, open } = useContext(MenusContext);
+  const { openId, close, open, setPosition } = useContext(MenusContext);
   function handleClick(e) {
-    const rect = e.target.closest("button").getBoundingClientRect()
-    console.log(rect)
+    const rect = e.target.closest("button").getBoundingClientRect();
+    setPosition({
+      x: window.innerWidth - rect.width - rect.x,
+      y: rect.height + rect.y + 8,
+    });
     openId === "" || openId !== id ? open(id) : close();
   }
   return (

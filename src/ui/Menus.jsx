@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { HiEllipsisVertical } from "react-icons/hi2";
 import styled from "styled-components";
+import { useOutsideClick } from "../hooks/UseOutsideClick";
 
 const Menu = styled.div`
   display: flex;
@@ -96,10 +97,12 @@ function Toggle({ id }) {
 }
 
 function List({ id, children }) {
-  const { openId, position } = useContext(MenusContext);
+  const { openId, position, close } = useContext(MenusContext);
+  const ref = useOutsideClick(close,true)
   if (openId !== id) return null;
+  
 
-  return <StyledList position={position}>{children}</StyledList>;
+  return <StyledList position={position} ref={ref}>{children}</StyledList>;
 }
 
 function Button({ children, icon, onClick }) {

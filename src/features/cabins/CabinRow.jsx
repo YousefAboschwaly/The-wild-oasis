@@ -7,6 +7,7 @@ import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import { useCreateCabin } from "./useCreateCabin";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
+import Table from "../../ui/Table";
 
 const TableRow = styled.div`
   display: grid;
@@ -66,7 +67,7 @@ export default function CabinRow({ cabin }) {
   }
   // https://ersqmuthcoyjqdgtqytk.supabase.co/storage/v1/object/public/cabin-images/e2416c82-690b-4d79-b42b-a2b73fc843f4-cabin-002.jpg
   return (
-    <TableRow role="row">
+    <Table.Row columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
       <Img src={image} alt={name} />
       <Cabin>{name}</Cabin>
       <div>Fits Up To {maxCapacity} guest</div>
@@ -105,6 +106,6 @@ export default function CabinRow({ cabin }) {
           </Modal.Window>
         </Modal>
       </div>
-    </TableRow>
+    </Table.Row>
   );
 }

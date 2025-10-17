@@ -58,3 +58,24 @@ const Empty = styled.p`
   text-align: center;
   margin: 2.4rem;
 `;
+
+
+export default function Table({columns , children}) {
+  return (
+    <StyledTable>
+       
+    </StyledTable>
+  )
+}
+function Header({columns, children}){
+
+}
+function Row({columns, children}){
+
+}
+function Body({ children}){
+
+}
+Table.Header = Header
+Table.Row = Row
+Table.Body = Body

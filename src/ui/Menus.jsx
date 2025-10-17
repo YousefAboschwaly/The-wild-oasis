@@ -1,6 +1,7 @@
+import { createContext, useState } from "react";
 import styled from "styled-components";
 
-const StyledMenu = styled.div`
+const Menu = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -61,11 +62,26 @@ const StyledButton = styled.button`
   }
 `;
 
-
+const MenusContext = createContext()
 export default function Menus({children}) {
+  const [openId, setOpenId] = useState("")
   return (
-    <div>
+    <MenusContext.Provider value={{openId}}>
         {children}
-    </div>
+    </MenusContext.Provider>
   )
 }
+
+function Toggle({id}){
+}
+
+function List({id , children}){
+}
+
+function Button({children}){
+
+}
+Menus.Menu = Menu
+Menus.Toggle = Toggle
+Menus.List = List
+Menu.Button = Button

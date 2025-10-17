@@ -14,7 +14,6 @@ async function getCabins() {
 
 // Create or Edit cabin
 async function createEditCabin(newCabin, id = null) {
-  console.log(newCabin, id);
 
   // get the oldData of the cabin with this id to get the old image
   let oldImage = null;

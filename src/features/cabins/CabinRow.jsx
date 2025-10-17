@@ -81,25 +81,24 @@ export default function CabinRow({ cabin }) {
           <HiSquare2Stack />
         </button>
         <Modal>
-          <Modal.Open>
+          <Modal.Open opens="edit">
             <button>
               <HiPencil />
             </button>
           </Modal.Open>
-          <Modal.Window>
+          <Modal.Window name="edit">
             <CreateCabinForm cabinToEdit={cabin} />
           </Modal.Window>
 
-
-          <Modal.Open opens="delete-cabin">
+          <Modal.Open opens="delete">
             <button disabled={isDeleting}>
               <HiTrash />
             </button>
           </Modal.Open>
 
-          <Modal.Window name="delete-cabin">
+          <Modal.Window name="delete">
             <ConfirmDelete
-            resourceName={"cabins"}
+              resourceName={"cabins"}
               onConfirm={() => deleteCabin(cabinId)}
               disabled={isDeleting}
             />

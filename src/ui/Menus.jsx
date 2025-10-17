@@ -77,7 +77,9 @@ export default function Menus({ children }) {
 
 function Toggle({ id }) {
   const { openId, close, open } = useContext(MenusContext);
-  function handleClick() {
+  function handleClick(e) {
+    const rect = e.target.closest("button").getBoundingClientRect()
+    console.log(rect)
     openId === "" || openId !== id ? open(id) : close();
   }
   return (

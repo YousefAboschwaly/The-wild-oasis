@@ -71,23 +71,21 @@ export default function Table({ columns, children }) {
 function Header({ children }) {
   const { columns } = useContext(TableContext);
   return (
-    <StyledHeader role="row" columns={columns}>
+    <StyledHeader as="header" role="row" columns={columns}>
       {children}
     </StyledHeader>
   );
 }
 function Row({ children }) {
-    const { columns } = useContext(TableContext);
+  const { columns } = useContext(TableContext);
   return (
     <StyledRow role="row" columns={columns}>
       {children}
     </StyledRow>
   );
 }
-function Body({ children }) {
-  return <StyledBody>
-    {children}
-  </StyledBody>
+function Body({ data, render }) {
+  return <StyledBody>{data?.map(render)}</StyledBody>;
 }
 Table.Header = Header;
 Table.Row = Row;

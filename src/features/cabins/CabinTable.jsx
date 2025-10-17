@@ -4,11 +4,10 @@ import toast from "react-hot-toast";
 import styled from "styled-components";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
-import Table from './../../ui/Table';
-
+import Table from "./../../ui/Table";
 
 const TableHeader = styled.header`
- display: grid;
+  display: grid;
   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
   column-gap: 2.4rem;
   align-items: center;
@@ -28,7 +27,7 @@ export default function CabinTable() {
   if (isPending) return <Spinner />;
   return (
     <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
-      <Table.Header >
+      <Table.Header>
         <div></div>
         <div>Cabin</div>
         <div>Capacity</div>
@@ -36,9 +35,10 @@ export default function CabinTable() {
         <div>Discount</div>
         <div></div>
       </Table.Header>
-      {cabins?.map((cabin) => (
-        <CabinRow cabin={cabin} key={cabin.id} />
-      ))}
+      <Table.Body
+        data={cabins}
+        render={(cabin) => <CabinRow cabin={cabin} key={cabin.id} />}
+      />
     </Table>
   );
 }

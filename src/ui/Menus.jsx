@@ -88,7 +88,10 @@ function Toggle({ id }) {
 }
 
 function List({ id, children }) {
-  return <StyledList>{children}</StyledList>;
+  const { openId } = useContext(MenusContext);
+  if (openId !== id) return null;
+
+  return <StyledList position={{ x: 20, y: 20 }}>{children}</StyledList>;
 }
 
 function Button({ children }) {
@@ -101,4 +104,4 @@ function Button({ children }) {
 Menus.Menu = Menu;
 Menus.Toggle = Toggle;
 Menus.List = List;
-Menu.Button = Button;
+Menus.Button = Button;

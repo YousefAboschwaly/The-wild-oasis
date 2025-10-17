@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useOutsideClick } from "../hooks/UseOutsideClick";
 
 const Menu = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -29,8 +30,8 @@ const StyledToggle = styled.button`
 `;
 
 const StyledList = styled.ul`
-  position: fixed;
-
+  position: absolute;
+  z-index: 10;
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-md);
@@ -84,8 +85,8 @@ function Toggle({ id }) {
   function handleClick(e) {
     const rect = e.target.closest("button").getBoundingClientRect();
     setPosition({
-      x: window.innerWidth - rect.width - rect.x,
-      y: rect.height + rect.y + 8,
+      x: 20,
+      y: rect.height + 8,
     });
     openId === "" || openId !== id ? open(id) : close();
   }
@@ -98,11 +99,14 @@ function Toggle({ id }) {
 
 function List({ id, children }) {
   const { openId, position, close } = useContext(MenusContext);
-  const ref = useOutsideClick(close,true)
+  const ref = useOutsideClick(close, true);
   if (openId !== id) return null;
-  
 
-  return <StyledList position={position} ref={ref}>{children}</StyledList>;
+  return (
+    <StyledList position={position} ref={ref}>
+      {children}
+    </StyledList>
+  );
 }
 
 function Button({ children, icon, onClick, disabled }) {
@@ -114,7 +118,7 @@ function Button({ children, icon, onClick, disabled }) {
   }
   return (
     <li>
-      <StyledButton onClick={handleClick} disabled={disabled||false}>
+      <StyledButton onClick={handleClick} disabled={disabled || false}>
         {icon}
         <span>{children}</span>
       </StyledButton>

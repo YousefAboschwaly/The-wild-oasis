@@ -25,17 +25,18 @@ const TableHeader = styled.header`
 
 export default function CabinTable() {
   const { cabins, isPending, error } = useCabins();
-  const [searchParams] = useSearchParams()
+  const [searchParams] = useSearchParams();
   if (error) toast.error(error.message);
   if (isPending) return <Spinner />;
-  const filterValue = searchParams.get("discount") || "all"
-  
-  const filteredCabins = cabins.filter((cabin)=>{
-    if(filterValue=== "with-discount" && cabin.discount>0) return cabin
-    if(filterValue=== "no-discount" && cabin.discount==0) return cabin
-    if(filterValue === "all") return cabin
-  })
-  console.log(filteredCabins)
+  const filterValue = searchParams.get("discount") || "all";
+
+  let filteredCabins;
+  if (filterValue === "no-discount")
+    filteredCabins = cabins?.filter((cabin) => cabin.discount === 0);
+  if (filterValue === "with-discount")
+    filteredCabins = cabins?.filter((cabin) => cabin.discount > 0);
+  if (filterValue === "all")
+    filteredCabins = cabins
   return (
     <Menus>
       <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">

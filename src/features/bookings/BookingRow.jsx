@@ -44,8 +44,8 @@ function BookingRow({
     numGuests,
     totalPrice,
     status
-    // guests: { fullName: guestName, email },
-    // cabins: { name: cabinName },
+    guests: { fullName: guestName, email },
+    cabins: { name: cabinName },
   },
 }) {
   const statusToTagName = {
@@ -56,12 +56,12 @@ function BookingRow({
 
   return (
     <Table.Row>
-      {/* <Cabin>{cabinName}</Cabin>
+      <Cabin>{cabinName}</Cabin>
 
       <Stacked>
         <span>{guestName}</span>
         <span>{email}</span>
-      </Stacked> */}
+      </Stacked>
 
       <Stacked>
         <span>

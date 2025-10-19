@@ -5,7 +5,7 @@ import Empty from './../../ui/Empty';
 
 function BookingTable() {
   const bookings = [];
-  if(!bookings.length) return <Empty resourceName={"Bookings"}/>
+  if(!bookings.length) return <Empty resourceName={"bookings"}/>
   return (
     <Menus>
       <Table columns="0.6fr 2fr 2.4fr 1.4fr 1fr 3.2rem">

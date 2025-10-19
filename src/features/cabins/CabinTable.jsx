@@ -7,6 +7,7 @@ import CabinRow from "./CabinRow";
 import Table from "./../../ui/Table";
 import Menus from "../../ui/Menus";
 import { useSearchParams } from "react-router-dom";
+import Empty from "../../ui/Empty";
 
 const TableHeader = styled.header`
   display: grid;
@@ -27,6 +28,8 @@ export default function CabinTable() {
   const { cabins, isPending, error } = useCabins();
   const [searchParams] = useSearchParams();
   if (error) toast.error(error.message);
+    if(!cabins.length) return <Empty resourceName={"cabins"}/>
+
   if (isPending) return <Spinner />;
   const filterValue = searchParams.get("discount") || "all";
 

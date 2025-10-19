@@ -27,10 +27,10 @@ const TableHeader = styled.header`
 export default function CabinTable() {
   const { cabins, isPending, error } = useCabins();
   const [searchParams] = useSearchParams();
-  if (error) toast.error(error.message);
-    if(!cabins.length) return <Empty resourceName={"cabins"}/>
-
   if (isPending) return <Spinner />;
+  if (error) toast.error(error.message);
+    if(!cabins?.length) return <Empty resourceName={"cabins"}/>
+
   const filterValue = searchParams.get("discount") || "all";
 
   // 1- Filter

@@ -3,8 +3,12 @@ import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 import Empty from "./../../ui/Empty";
 import { useBookings } from "./useBookings";
+import Spinner from "../../ui/Spinner";
 
 function BookingTable() {
+  const { isPending, error, bookings } = useBookings();
+  if (isPending) return <Spinner />;
+console.log(bookings)
   if (!bookings?.length) return <Empty resourceName={"bookings"} />;
   return (
     <Menus>

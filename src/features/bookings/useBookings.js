@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getBookings } from "../../services/apiBookings";
 import { useSearchParams } from "react-router-dom";
+import SortBy from './../../ui/SortBy';
 
 export function useBookings() {
   const [searchParams] = useSearchParams();
@@ -11,9 +12,8 @@ export function useBookings() {
 
 //  SORT
  const sortByRaw = searchParams.get("sortBy") || "startDate-desc"
- const [field,direction] = sortByRaw.slice("-")
+ const [field,direction] = sortByRaw.split("-")
  const sortBy = {field,direction}
- console.log(sortBy)
 
 
   const {

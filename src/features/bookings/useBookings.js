@@ -4,7 +4,8 @@ import { useSearchParams } from "react-router-dom";
 
 export function useBookings() {
   const [searchParams] = useSearchParams();
-  const filter = searchParams.get("status") || "all";
+  const filteredValue = searchParams.get("status") || "all";
+ const filter = {field:"status", value:filteredValue}
 
   const {
     isPending,
@@ -12,7 +13,7 @@ export function useBookings() {
     data: bookings,
   } = useQuery({
     queryKey: ["bookings", filter],
-    queryFn: () => getBookings(filter),
+    queryFn: () => getBookings({filter}),
   });
 
   return { isPending, error, bookings };

@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 export function useBookings() {
   const [searchParams] = useSearchParams();
   const filteredValue = searchParams.get("status") || "all";
- const filter = {field:"status", value:filteredValue}
+ const filter = {field:"status", value:filteredValue,method:"eq"}
 
   const {
     isPending,

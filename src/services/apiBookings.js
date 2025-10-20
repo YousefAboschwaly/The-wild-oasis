@@ -9,7 +9,7 @@ export async function getBookings({filter}) {
       "id,created_at,startDate,endDate,numNights,numGuests,status,totalPrice, cabins(name),guests(fullName,email)"
     )
     if(filter.value !== "all"){
-      query = query.eq(filter.field,filter.value);
+      query = query[filter.method || "eq"](filter.field,filter.value);
     }
     let  { data, error } = await query
   if (error) {

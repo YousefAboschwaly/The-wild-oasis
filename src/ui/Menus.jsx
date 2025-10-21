@@ -38,6 +38,9 @@ const StyledList = styled.ul`
 
   right: ${(props) => props.position.x}px;
   top: ${(props) => props.position.y}px;
+  min-width: 16rem;         
+  padding: 0.4rem 0;        
+  overflow: hidden;
 `;
 
 const StyledButton = styled.button`
@@ -45,7 +48,7 @@ const StyledButton = styled.button`
   text-align: left;
   background: none;
   border: none;
-  padding: 1.2rem 2.4rem;
+  padding: 1.2rem 2.2rem;
   font-size: 1.4rem;
   transition: all 0.2s;
 

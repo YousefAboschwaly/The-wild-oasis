@@ -28,7 +28,9 @@ function CheckinBooking() {
   const { booking, isPending } = useBooking();
   const { checkingIn, isCheckingIn } = useCheckin();
   const moveBack = useMoveBack();
+
   const [confirmPaid, setConfirmPaid] = useState(false);
+  const [addBreakfast, setAddBreakfast] = useState(false);
   useEffect(() => {
     setConfirmPaid(booking?.isPaid ?? false);
   }, [booking]);
@@ -59,6 +61,18 @@ function CheckinBooking() {
       <BookingDataBox booking={booking} />
       <Box>
         <Checkbox
+          id="breakfast"
+          checked={addBreakfast}
+          onChange={() => {
+            setAddBreakfast((add) => !add);
+            setConfirmPaid(false);
+          }}
+        >
+          Want to add breakfast for X?
+        </Checkbox>
+      </Box>
+      <Box>
+        <Checkbox
           id={"confirm"}
           checked={confirmPaid}
           onChange={() => setConfirmPaid((confirm) => !confirm)}
@@ -70,7 +84,7 @@ function CheckinBooking() {
       </Box>
 
       <ButtonGroup>
-        <Button onClick={handleCheckin} disabled={!confirmPaid || isCheckingIn }>
+        <Button onClick={handleCheckin} disabled={!confirmPaid || isCheckingIn}>
           Check in booking #{bookingId}
         </Button>
         <Button variation="secondary" onClick={moveBack}>

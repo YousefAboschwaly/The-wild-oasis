@@ -30,7 +30,7 @@ console.log(bookings)
           )}
         />
         <Table.Footer>
-          <Pagination count={20}/>
+          <Pagination count={45}/>
         </Table.Footer>
       </Table>
     </Menus>

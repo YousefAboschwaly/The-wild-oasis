@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import styled from "styled-components";
 import BookingDataBox from "../../features/bookings/BookingDataBox";
 
@@ -52,7 +51,17 @@ function CheckinBooking() {
 
   function handleCheckin() {
     if (!confirmPaid) return;
-    checkingIn(bookingId);
+    if (addBreakfast)
+      checkingIn({
+        bookingId,
+        breakfast: {
+          hasBreakfast: true,
+          extrasPrice: optionalBreakfast,
+          totalPrice: totalPrice + optionalBreakfast,
+        },
+      });
+
+  if(!addBreakfast) checkingIn({bookingId,breakfast:{}})
   }
 
   return (

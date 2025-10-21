@@ -58,7 +58,7 @@ function BookingRow({
     "checked-out": "silver",
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <Table.Row>
@@ -88,8 +88,20 @@ function BookingRow({
       <Menus.Menu>
         <Menus.Toggle id={bookingId} />
         <Menus.List id={bookingId}>
-          <Menus.Button icon={<HiEye/>} onClick={()=>navigate(`/booking/${bookingId}`)}>see Details</Menus.Button>
-          <Menus.Button icon={<HiArrowDownOnSquare/>} onClick={()=>navigate(`/checkin/${bookingId}`)}>Check in</Menus.Button>
+          <Menus.Button
+            icon={<HiEye />}
+            onClick={() => navigate(`/booking/${bookingId}`)}
+          >
+            see Details
+          </Menus.Button>
+          {status === "unconfirmed" && (
+            <Menus.Button
+              icon={<HiArrowDownOnSquare />}
+              onClick={() => navigate(`/checkin/${bookingId}`)}
+            >
+              Check in
+            </Menus.Button>
+          )}
         </Menus.List>
       </Menus.Menu>
     </Table.Row>

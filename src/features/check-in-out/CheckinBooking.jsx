@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import styled from "styled-components";
 import BookingDataBox from "../../features/bookings/BookingDataBox";
 
@@ -20,7 +21,10 @@ const Box = styled.div`
 `;
 
 function CheckinBooking() {
-  
+  const { booking, isPending } = useBooking();
+  const moveBack = useMoveBack();
+
+  if(isPending) return <Spinner/>
 
   const {
     id: bookingId,

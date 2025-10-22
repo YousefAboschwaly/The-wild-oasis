@@ -12,7 +12,7 @@ import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "./useBooking";
 import Spinner from "../../ui/Spinner";
 import { useNavigate } from "react-router-dom";
-import { HiArrowDownOnSquare, HiArrowUpOnSquare } from "react-icons/hi2";
+import { HiArrowDownOnSquare, HiArrowUpOnSquare, HiTrash } from "react-icons/hi2";
 import { useCheckout } from "../check-in-out/useCheckout";
 
 const HeadingGroup = styled.div`
@@ -67,6 +67,11 @@ function BookingDetail() {
             disabled={isCheckingOut}
           >
             Check out
+          </Button>
+        )}
+        {(status === "unconfirmed" || status === "checked-out") && (
+          <Button icon={<HiTrash />} onClick={() => {}}>
+            Delete
           </Button>
         )}
 

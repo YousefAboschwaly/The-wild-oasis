@@ -19,6 +19,8 @@ import {
 } from "react-icons/hi2";
 import { useCheckout } from "../check-in-out/useCheckout";
 import { useDeleteBooking } from "./useDeleteBooking";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -75,17 +77,23 @@ function BookingDetail() {
             Check out
           </Button>
         )}
-        {(status === "unconfirmed" || status === "checked-out") && (
-          <Button
-            icon={<HiTrash />}
-            onClick={() => {
-              deleteBooking(bookingId);
-            }}
-            disabled={isDeleting}
-          >
-            Delete
-          </Button>
-        )}
+        <Modal>
+          <Modal.Open opens={"delete"}>
+            <Button variation="danger" icon={<HiTrash />} disabled={isDeleting}>
+              Delete Booking
+            </Button>
+          </Modal.Open>
+
+          <Modal.Window name={"delete"}>
+            <ConfirmDelete
+              resourceName={"booking"}
+              onConfirm={() => deleteBooking(bookingId,{
+                onSettled:navigate(-1)
+              })}
+              disabled={isDeleting}
+            />
+          </Modal.Window>
+        </Modal>
 
         <Button variation="secondary" onClick={moveBack}>
           Back

@@ -16,6 +16,7 @@ import {
 } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import { useCheckout } from "../check-in-out/useCheckout";
+import { useDeleteBooking } from "./useDeleteBooking";
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -64,6 +65,8 @@ function BookingRow({
     "checked-out": "silver",
   };
   const { checkingOut, isCheckingOut } = useCheckout();
+    const { deleteBooking, isDeleting } = useDeleteBooking();
+  
 
   const navigate = useNavigate();
 
@@ -122,7 +125,7 @@ function BookingRow({
           )}
 
           {(status === "unconfirmed" || status === "checked-out") && (
-            <Menus.Button icon={<HiTrash />} onClick={() => {}}>
+            <Menus.Button icon={<HiTrash />} onClick={() => {deleteBooking(bookingId)}} disabled={isDeleting}>
               Delete
             </Menus.Button>
           )}

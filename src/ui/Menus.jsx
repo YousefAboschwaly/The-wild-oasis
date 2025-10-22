@@ -38,7 +38,7 @@ const StyledList = styled.ul`
 
   right: ${(props) => props.position.x}px;
   top: ${(props) => props.position.y}px;
-  min-width: 16rem;         
+  min-width: 18rem;         
   padding: 0.4rem 0;        
   overflow: hidden;
 `;

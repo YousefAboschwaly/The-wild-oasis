@@ -13,6 +13,7 @@ import { useBooking } from "./useBooking";
 import Spinner from "../../ui/Spinner";
 import { useNavigate } from "react-router-dom";
 import { HiArrowDownOnSquare, HiArrowUpOnSquare } from "react-icons/hi2";
+import { useCheckout } from "../check-in-out/useCheckout";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -23,10 +24,11 @@ const HeadingGroup = styled.div`
 function BookingDetail() {
   const navigate = useNavigate();
   const { booking, isPending } = useBooking();
+  const { checkingOut, isCheckingOut } = useCheckout();
   const moveBack = useMoveBack();
 
   if (isPending) return <Spinner />;
-  const { id, status } = booking;
+  const { id: bookingId, status } = booking;
 
   const statusToTagName = {
     unconfirmed: "blue",
@@ -38,7 +40,7 @@ function BookingDetail() {
     <>
       <Row type="horizontal">
         <HeadingGroup>
-          <Heading as="h1">Booking #{id}</Heading>
+          <Heading as="h1">Booking #{bookingId}</Heading>
           <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
         </HeadingGroup>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
@@ -50,14 +52,20 @@ function BookingDetail() {
         {status === "unconfirmed" && (
           <Button
             icon={<HiArrowDownOnSquare />}
-            onClick={() => navigate(`/checkin/${id}`)}
+            onClick={() => navigate(`/checkin/${bookingId}`)}
           >
             Check in
           </Button>
         )}
 
         {status === "checked-in" && (
-          <Button icon={<HiArrowUpOnSquare />} onClick={() => {}}>
+          <Button
+            icon={<HiArrowUpOnSquare />}
+            onClick={() => {
+              checkingOut(bookingId);
+            }}
+            disabled={isCheckingOut}
+          >
             Check out
           </Button>
         )}

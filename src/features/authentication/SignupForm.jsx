@@ -7,7 +7,7 @@ import Input from "../../ui/Input";
 // Email regex: /\S+@\S+\.\S+/
 
 function SignupForm() {
-  const { register, formState } = useForm();
+  const { register, formState , getValues } = useForm();
   const { errors } = formState;
 
   return (
@@ -28,6 +28,10 @@ function SignupForm() {
           id="email"
           {...register("email", {
             required: "This field is required",
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: "Please provide a valid email address",
+            },
           })}
         />
       </FormRow>
@@ -38,6 +42,10 @@ function SignupForm() {
           id="password"
           {...register("password", {
             required: "This field is required",
+            minLength: {
+              value: 8,
+              message: "Password needs a minimum of 8 characters ",
+            },
           })}
         />
       </FormRow>
@@ -48,6 +56,7 @@ function SignupForm() {
           id="passwordConfirm"
           {...register("passwordConfirm", {
             required: "This field is required",
+            validate:(value)=>value ===getValues().password || "Passwords need to match"
           })}
         />
       </FormRow>

@@ -12,7 +12,7 @@ function SignupForm() {
 
   return (
     <Form>
-      <FormRow label="Full name" error={""}>
+      <FormRow label="Full name" error={errors?.fullName}>
         <Input
           type="text"
           id="fullName"
@@ -22,7 +22,7 @@ function SignupForm() {
         />
       </FormRow>
 
-      <FormRow label="Email address" error={""}>
+      <FormRow label="Email address" error={errors?.email}>
         <Input
           type="email"
           id="email"
@@ -36,7 +36,7 @@ function SignupForm() {
         />
       </FormRow>
 
-      <FormRow label="Password (min 8 characters)" error={""}>
+      <FormRow label="Password (min 8 characters)" error={errors?.password}>
         <Input
           type="password"
           id="password"
@@ -50,7 +50,7 @@ function SignupForm() {
         />
       </FormRow>
 
-      <FormRow label="Repeat password" error={""}>
+      <FormRow label="Repeat password" error={errors?.confirmPassword}>
         <Input
           type="password"
           id="passwordConfirm"

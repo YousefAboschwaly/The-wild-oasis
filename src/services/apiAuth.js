@@ -5,7 +5,9 @@ export async function login({ email, password }) {
     email,
     password,
   });
-  if (error) throw new error(error.message);
+
+  if (error) throw new Error(error.message);
+
   return data;
 }
 

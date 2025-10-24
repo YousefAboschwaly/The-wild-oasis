@@ -11,10 +11,10 @@ export async function login({ email, password }) {
 
 export async function getCurrentUser() {
   const { data: session } = await supabase.auth.getSession();
-  // To check if there is user that make login before or not
   if (!session.session) return null;
-  // To get data about user if there is user exist
+
   const { data, error } = await supabase.auth.getUser();
-  if (error) throw new error(error.message);
-  return data;
+
+  if (error) throw new Error(error.message);
+  return data?.user;
 }

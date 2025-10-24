@@ -15,12 +15,14 @@ const FullPage = styled.div`
 export default function ProtectedRoute({ children }) {
   const navigate = useNavigate();
   //1- Load the authenticated user
-  const { isAuthenticated, isPending } = useUser();
+  const { isAuthenticated, isPending , user } = useUser();
 
   // 2- if there is NO authenticated user , redirect to /login
-
+console.log(user)
   useEffect(() => {
-    if (!isAuthenticated && !isPending) navigate("/login");
+    if (!isAuthenticated && !isPending){
+      console.log("NOT AUTHENTiCATED")
+      navigate("/login",{replace:true})};
   }, [isAuthenticated, isPending, navigate]);
 
   // 3- showing Spinner when loading data
@@ -32,5 +34,8 @@ export default function ProtectedRoute({ children }) {
     );
 
   // 4- if the user is authenticated
-  if (isAuthenticated ) return children;
+  if (isAuthenticated ){
+    console.log(isAuthenticated)
+    return children;}
+  return null
 }

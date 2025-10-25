@@ -8,14 +8,19 @@ import { useSignup } from "./useSignup";
 // Email regex: /\S+@\S+\.\S+/
 
 function SignupForm() {
-  const {signup,isPending} = useSignup()
-  const { register, formState, getValues, handleSubmit } = useForm();
+  const { signup, isPending } = useSignup();
+  const { register, formState, getValues, handleSubmit, reset } = useForm();
   const { errors } = formState;
-  function onSubmit({email, password , fullName}) {
-    signup({email,password,fullName})
+  function onSubmit({ email, password, fullName }) {
+    signup(
+      { email, password, fullName },
+      {
+        onSettled: reset,
+      }
+    );
   }
   return (
-    <Form  onSubmit={ handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow label="Full name" error={errors?.fullName?.message}>
         <Input
           type="text"
@@ -23,6 +28,7 @@ function SignupForm() {
           {...register("fullName", {
             required: "This field is required",
           })}
+          disabled={isPending}
         />
       </FormRow>
 
@@ -37,10 +43,14 @@ function SignupForm() {
               message: "Please provide a valid email address",
             },
           })}
+          disabled={isPending}
         />
       </FormRow>
 
-      <FormRow label="Password (min 8 characters)" error={errors?.password?.message}>
+      <FormRow
+        label="Password (min 8 characters)"
+        error={errors?.password?.message}
+      >
         <Input
           type="password"
           id="password"
@@ -51,6 +61,7 @@ function SignupForm() {
               message: "Password needs a minimum of 8 characters ",
             },
           })}
+          disabled={isPending}
         />
       </FormRow>
 
@@ -63,6 +74,7 @@ function SignupForm() {
             validate: (value) =>
               value === getValues().password || "Passwords need to match",
           })}
+          disabled={isPending}
         />
       </FormRow>
 

@@ -19,13 +19,12 @@ function UpdatePasswordForm() {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow
-        label="Password (min 8 characters)"
+        label=" New password (min 8 cahrs)"
         error={errors?.password?.message}
       >
         <Input
           type="password"
           id="password"
-          autoComplete="current-password"
           disabled={isUpdating}
           {...register("password", {
             required: "This field is required",
@@ -43,7 +42,6 @@ function UpdatePasswordForm() {
       >
         <Input
           type="password"
-          autoComplete="new-password"
           id="passwordConfirm"
           disabled={isUpdating}
           {...register("passwordConfirm", {

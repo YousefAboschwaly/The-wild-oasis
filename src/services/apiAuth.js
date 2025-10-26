@@ -69,7 +69,7 @@ export async function updateCurrentUser({
 
   // 4- Upload avatar to avatars Bucket
   const ext = avatar.name.split(".").pop();
-  const fileName = `avatar-${data.user.id}.${ext}`;
+  const fileName = `avatar-${data.user.id}-${ Math.floor(Math.random() * 100000) + 1}.${ext}`;
   const { error: storageError } = await supabase.storage
     .from("avatars")
     .upload(fileName, avatar, { upsert: true }); // upsert=true يسمح بالكتابة فوق القديمة لو لم تُحذف

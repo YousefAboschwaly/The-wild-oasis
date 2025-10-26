@@ -39,13 +39,28 @@ export async function logout() {
   if (error) throw new Error(error.message);
 }
 
-export async function updateCurrentUser({ fullName, password, avatar }) {
-  let updateData;
+export async function updateCurrentUser({
+  fullName,
+  password,
+  avatar,
+  oldAvatarUrl,
+}) {
+  //if there is oldAvatar to delete it
+  if (oldAvatarUrl && avatar) {
+    const oldPath = oldAvatarUrl.split("/").slice(-1)[0];
+    const { error: deleteError } = await supabase.storage
+      .from("avatars")
+      .remove([oldPath]);
+    if (deleteError)
+      console.error("Error deleting old avatar:", deleteError.message);
+  }
 
-  // 1 handle data that will be updated
-  if (fullName) updateData = { data: { fullName } };
-  if (password) updateData = { password };
-  // 2 update User
+  // 1 Prepare data that will be updated
+  let updateData = {};
+  if (fullName) updateData.data = { fullName };
+  if (password) updateData.password = password;
+
+  // 2 update password and fullname
   const { data, error } = await supabase.auth.updateUser(updateData);
   if (error) throw new Error(error.message);
 
@@ -53,18 +68,23 @@ export async function updateCurrentUser({ fullName, password, avatar }) {
   if (!avatar) return data;
 
   // 4- Upload avatar to avatars Bucket
-  const fileName = `avatar-${data?.user.id}`;
+  const ext = avatar.name.split(".").pop();
+  const fileName = `avatar-${data.user.id}.${ext}`;
   const { error: storageError } = await supabase.storage
     .from("avatars")
-    .upload(fileName,avatar);
-  if (storageError) throw new Error(storageError.message);
-  // 5- Update avatar in the user
-  const { data: updateUser, error: error2 } = await supabase.auth.updateUser({
-    data: {
-      avatar: `${SUPBASEURL}/storage/v1/object/public/avatars/${fileName}`,
-    },
-  });
+    .upload(fileName, avatar, { upsert: true }); // upsert=true يسمح بالكتابة فوق القديمة لو لم تُحذف
 
-  if (error2) throw new Error(error2.message);
-  return updateUser;
+  if (storageError) throw new Error(storageError.message);
+
+  // 5- Update avatar in the user
+  const { data: updatedUser, error: updateError } =
+    await supabase.auth.updateUser({
+      data: {
+        avatar: `${SUPBASEURL}/storage/v1/object/public/avatars/${fileName}`,
+      },
+    });
+
+  if (updateError) throw new Error(updateError.message);
+
+  return updatedUser;
 }

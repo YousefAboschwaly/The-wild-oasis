@@ -7,7 +7,7 @@ export default function DarkModeToggle() {
   console.log(isDarkMode)
   return (
     <ButtonIcon onClick={toggleDarkMode}>
-     {isDarkMode? <HiOutlineMoon/> :<HiOutlineSun/>}
+     {!isDarkMode? <HiOutlineMoon/> :<HiOutlineSun/>}
     </ButtonIcon>
   )
 }

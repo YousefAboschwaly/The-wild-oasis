@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
 
 const DarkModeContext = createContext()
@@ -7,6 +7,18 @@ const DarkModeContext = createContext()
 
 function DarkModeProvider({children}){
 const [isDarkMode,setIsDarkMode] = useLocalStorageState(false,"isDarkMode")
+
+useEffect(()=>{
+  if(isDarkMode){
+    document.documentElement.classList.remove('light-mode')
+    document.documentElement.classList.add('dark-mode')
+  }
+ else{
+    document.documentElement.classList.remove('dark-mode')
+    document.documentElement.classList.add('light-mode')
+  }
+},[isDarkMode])
+
 function toggleDarkMode(){
   setIsDarkMode(dark=>!dark)
 }

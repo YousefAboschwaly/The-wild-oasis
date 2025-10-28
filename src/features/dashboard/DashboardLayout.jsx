@@ -9,6 +9,7 @@ const StyledDashboardLayout = styled.div`
 
 
 export default function DashboardLayout() {
+  
   return (
     <StyledDashboardLayout>
       <div>Statistics</div>

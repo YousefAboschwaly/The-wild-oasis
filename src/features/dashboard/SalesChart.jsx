@@ -10,6 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 const StyledSalesChart = styled(DashboardBox)`
   grid-column: 1 / -1;
@@ -53,7 +54,9 @@ const fakeData = [
   { label: "Feb 06", totalSales: 1450, extrasSales: 400 },
 ];
 
-const isDarkMode = true;
+
+export default function SalesChart() {
+  const {isDarkMode} = useDarkMode();
 const colors = isDarkMode
   ? {
       totalSales: { stroke: "#4f46e5", fill: "#4f46e5" },
@@ -68,7 +71,6 @@ const colors = isDarkMode
       background: "#fff",
     };
 
-export default function SalesChart() {
   return (
     <StyledSalesChart>
       <Heading as="h2">Sales</Heading>
@@ -80,8 +82,8 @@ export default function SalesChart() {
           <CartesianGrid strokeDasharray={4} />
           <Area
             dataKey={"totalSales"}
-            stroke="blue"
-            fill="lightBlue"
+            stroke={colors.totalSales.stroke}
+            fill={colors.totalSales.fill}
             type={"monotone"}
           />
         </AreaChart>

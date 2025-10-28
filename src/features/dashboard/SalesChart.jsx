@@ -85,13 +85,23 @@ export default function SalesChart() {
             tick={{ fill: colors.text }}
             tickLine={{ stroke: colors.text }}
           />
-          <Tooltip contentStyle={{backgroundColor:colors.background}} />
+          <Tooltip contentStyle={{backgroundColor:colors.background}}  />
           <CartesianGrid strokeDasharray={4} />
           <Area
             dataKey={"totalSales"}
             stroke={colors.totalSales.stroke}
             fill={colors.totalSales.fill}
             type={"monotone"}
+            name="Total Sales"
+            unit={"$"}
+          />
+          <Area
+            dataKey={"extrasSales"}
+            stroke={colors.extrasSales.stroke}
+            fill={colors.extrasSales.fill}
+            type={"monotone"}
+            name="Extras Sales"
+            unit={"$"}
           />
         </AreaChart>
       </ResponsiveContainer>

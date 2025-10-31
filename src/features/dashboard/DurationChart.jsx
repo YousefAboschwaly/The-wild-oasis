@@ -1,4 +1,4 @@
-import { Pie, PieChart, ResponsiveContainer } from "recharts";
+import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import styled from "styled-components";
 
 const ChartBox = styled.div`
@@ -146,7 +146,15 @@ export default function DurationChart({ confirmedStays }) {
             cx={"40%"}
             cy={"50%"}
             paddingAngle={3}
-          />
+          >
+            {startDataDark.map((entry) => (
+              <Cell
+                fill={entry.color}
+                stroke={entry.color}
+                key={entry.duration}
+              />
+            ))}
+          </Pie>
         </PieChart>
       </ResponsiveContainer>
     </ChartBox>

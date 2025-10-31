@@ -1,4 +1,4 @@
-import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer } from "recharts";
 import styled from "styled-components";
 
 const ChartBox = styled.div`
@@ -155,6 +155,7 @@ export default function DurationChart({ confirmedStays }) {
               />
             ))}
           </Pie>
+          <Legend verticalAlign="middle" align="right" width={"30%"} layout="vertical" iconType="circle" iconSize={15}/>
         </PieChart>
       </ResponsiveContainer>
     </ChartBox>

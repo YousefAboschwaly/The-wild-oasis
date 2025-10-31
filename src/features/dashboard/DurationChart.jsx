@@ -1,3 +1,4 @@
+import { PieChart, ResponsiveContainer } from "recharts";
 import styled from "styled-components";
 
 const ChartBox = styled.div`
@@ -129,4 +130,17 @@ function prepareData(startData, stays) {
     .filter((obj) => obj.value > 0);
 
   return data;
+}
+
+
+export default function DurationChart({confirmedStays}) {
+  return (
+    <ChartBox>
+      <ResponsiveContainer>
+        <PieChart>
+          
+        </PieChart>
+      </ResponsiveContainer>
+    </ChartBox>
+  )
 }

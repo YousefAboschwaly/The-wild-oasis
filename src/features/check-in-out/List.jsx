@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Spinner from "./../../ui/Spinner";
-
+import TodayItem from "./TodayItem";
 
 const TodayList = styled.ul`
   overflow: scroll;
@@ -22,17 +22,22 @@ const NoActivity = styled.p`
   margin-top: 0.8rem;
 `;
 
-
-export default function List({isPending , staysActivity}) {
-  return <>
-   {!isPending ? (
+export default function List({ isPending, staysActivity }) {
+  return (
+    <>
+      {!isPending ? (
         staysActivity?.length > 0 ? (
-          <TodayList></TodayList>
+          <TodayList>
+            {staysActivity.map((activity) => (
+              <TodayItem key={activity.id} activity={activity} />
+            ))}
+          </TodayList>
         ) : (
           <NoActivity>No activity today...</NoActivity>
         )
       ) : (
         <Spinner />
       )}
-  </>
+    </>
+  );
 }

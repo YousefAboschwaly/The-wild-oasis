@@ -38,7 +38,6 @@ function CheckinBooking() {
 
   if (isPending || isLoadingSettings) return <Spinner />;
 
-  console.log(booking);
   const {
     id: bookingId,
     guests,

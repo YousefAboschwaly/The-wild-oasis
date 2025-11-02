@@ -18,7 +18,6 @@ function UpdateSettingsForm() {
 
   function handleUpdate(e, field) {
     const { value } = e.target;
-    console.log(value, { [field]: value });
     if (settings[field] == value) return;
     updateSetting({ [field]: value });
   }

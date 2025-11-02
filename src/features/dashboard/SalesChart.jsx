@@ -57,7 +57,6 @@ export default function SalesChart({ numDays, bookings }) {
     };
   });
 
-  console.log(data)
 
   return (
     <StyledSalesChart>
